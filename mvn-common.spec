@@ -4,7 +4,7 @@
 #
 Name     : mvn-common
 Version  : 3.3.1
-Release  : 1
+Release  : 2
 URL      : https://github.com/confluentinc/common/archive/v3.3.1.tar.gz
 Source0  : https://github.com/confluentinc/common/archive/v3.3.1.tar.gz
 Source1  : http://packages.confluent.io/maven/io/confluent/common-parent/3.3.1/common-parent-3.3.1.pom
@@ -14,6 +14,7 @@ Source4  : http://packages.confluent.io/maven/io/confluent/common/3.3.1/common-3
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause MIT
+Requires: mvn-common-data = %{version}-%{release}
 Requires: mvn-common-license = %{version}-%{release}
 BuildRequires : apache-maven
 BuildRequires : buildreq-mvn
@@ -22,6 +23,14 @@ BuildRequires : buildreq-mvn
 Confluent Commons
 =================
 Contains 3 libraries: [metrics](metrics), [config](config), [utils](utils).
+
+%package data
+Summary: data components for the mvn-common package.
+Group: Data
+
+%description data
+data components for the mvn-common package.
+
 
 %package license
 Summary: license components for the mvn-common package.
@@ -43,9 +52,28 @@ cp NOTICE %{buildroot}/usr/share/package-licenses/mvn-common/NOTICE
 cp licenses/LICENSE.apache2.txt %{buildroot}/usr/share/package-licenses/mvn-common/licenses_LICENSE.apache2.txt
 cp licenses/LICENSE.bsd.txt %{buildroot}/usr/share/package-licenses/mvn-common/licenses_LICENSE.bsd.txt
 cp licenses/LICENSE.mit.txt %{buildroot}/usr/share/package-licenses/mvn-common/licenses_LICENSE.mit.txt
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/io/confluent/common-parent/3.3.1
+cp %{SOURCE1} %{buildroot}/usr/share/java/.m2/repository/io/confluent/common-parent/3.3.1/common-parent-3.3.1.pom
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/io/confluent/common-utils/3.3.1
+cp %{SOURCE2} %{buildroot}/usr/share/java/.m2/repository/io/confluent/common-utils/3.3.1/common-utils-3.3.1.jar
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/io/confluent/common-utils/3.3.1
+cp %{SOURCE3} %{buildroot}/usr/share/java/.m2/repository/io/confluent/common-utils/3.3.1/common-utils-3.3.1.pom
+
+mkdir -p %{buildroot}/usr/share/java/.m2/repository/io/confluent/common/3.3.1
+cp %{SOURCE4} %{buildroot}/usr/share/java/.m2/repository/io/confluent/common/3.3.1/common-3.3.1.pom
+
 
 %files
 %defattr(-,root,root,-)
+
+%files data
+%defattr(-,root,root,-)
+/usr/share/java/.m2/repository/io/confluent/common-parent/3.3.1/common-parent-3.3.1.pom
+/usr/share/java/.m2/repository/io/confluent/common-utils/3.3.1/common-utils-3.3.1.jar
+/usr/share/java/.m2/repository/io/confluent/common-utils/3.3.1/common-utils-3.3.1.pom
+/usr/share/java/.m2/repository/io/confluent/common/3.3.1/common-3.3.1.pom
 
 %files license
 %defattr(0644,root,root,0755)
